@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Header from './Header';
 import Content from './Content';
 import Total from './Total';
+import Counter from './Counter'
 
 const App = () => {
   const course = {
@@ -34,6 +35,7 @@ const App = () => {
       <Header course={name} />
       <Content parts={parts} />
       <Total total={total}/>
+      <Counter />
     </div>
   )
 }
