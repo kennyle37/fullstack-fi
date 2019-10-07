@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 import CounterDisplay from './CounterDisplay';
 import Button from './Button';
+import History from './History';
 
 const Counter = (props) => {
   const [ counter, setCounter ] = useState(0);
   const [ direction, setDirection ] = useState({ left: 0, right: 0 });
-  const [allClicks, setAllClicks] = useState([])
+  const [ allClicks, setAllClicks ] = useState([])
   const { left, right } = direction;
 
   const handleClick = (value) => () => setCounter(value)
@@ -34,7 +35,7 @@ const Counter = (props) => {
         <Button handleClick={handleRight(right+1)}>Increment</Button>
         <Button handleClick={handleRight(right-1)}>Decrement</Button>
         <Button handleClick={handleRight(0)}>Reset</Button>
-      <p>{allClicks.join(' ')}</p>
+      <History allClicks={allClicks.join('')} />
       </div>
     </div>
   )
