@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import Header from './Header'
 import Button from './Button'
-import Display from './Display'
+import StatisticContainer from './StatisticContainer'
 import Statistic from './Statistic'
 
 const App = () => {
@@ -41,12 +41,15 @@ const App = () => {
       <Button handleClick={handleNeutralCount(neutral+1)}>Neutral</Button>
       <Button handleClick={handleBadCount(bad+1)}>Bad</Button>
       <Header title={'statistics'} />
-      <Display category={'good'} total={good}/>
-      <Display category={'neutral'} total={neutral}/>
-      <Display category={'bad'} total={bad}/>
-      <Statistic metric={'all'} score={all} />
-      <Statistic metric={'average'} score={average} />
-      <Statistic metric={'positive'} score={positive + ' %'} />
+      <StatisticContainer good={good} bad={bad} neutral={neutral}>
+        <Statistic metric={'good'} score={good}/>
+        <Statistic metric={'neutral'} score={neutral}/>
+        <Statistic metric={'bad'} score={bad}/>
+        <Statistic metric={'all'} score={all} />
+        <Statistic metric={'average'} score={average} />
+        <Statistic metric={'positive'} score={positive + ' %'} />
+      </StatisticContainer>
+
     </div>
   )
 }

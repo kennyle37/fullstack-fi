@@ -1,5 +1,11 @@
 import React from 'react';
 
-const Statistic = ({ metric, score }) => <div>{metric} {score}</div>
+const Statistic = ({ metric, score }) => {
+  return (
+    <div>
+      {metric} {score}
+    </div>
+  )
+}
 
 export default Statistic;
