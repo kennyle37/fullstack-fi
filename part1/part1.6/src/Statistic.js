@@ -2,9 +2,15 @@ import React from 'react';
 
 const Statistic = ({ metric, score }) => {
   return (
-    <div>
-      {metric} {score}
-    </div>
+    <tr>
+      <th>
+        {metric}
+      </th>
+      <th>
+        {score}
+      </th>
+
+    </tr>
   )
 }
 

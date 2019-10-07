@@ -11,7 +11,9 @@ const App = () => {
   const { good, neutral, bad } = totalCount;
   const all = good+bad+neutral;
   const average = (good + bad + neutral) > 0 ? (good + bad*-1) / (good + bad + neutral) : 0;
-  const positive = (good + bad + neutral) > 0 ? (good / (good + bad + neutral)) * 100 : 0; 
+  const positive = (good + bad + neutral) > 0 ? (good / (good + bad + neutral)) * 100 : 0;
+  const averageRounded = average.toFixed(2);
+  const positiveRounded = positive.toFixed(2);
 
   const handleGoodCount = (value) => () => {
     setTotalCount({
@@ -46,8 +48,8 @@ const App = () => {
         <Statistic metric={'neutral'} score={neutral}/>
         <Statistic metric={'bad'} score={bad}/>
         <Statistic metric={'all'} score={all} />
-        <Statistic metric={'average'} score={average} />
-        <Statistic metric={'positive'} score={positive + ' %'} />
+        <Statistic metric={'average'} score={averageRounded} />
+        <Statistic metric={'positive'} score={positiveRounded + ' %'} />
       </StatisticContainer>
 
     </div>
