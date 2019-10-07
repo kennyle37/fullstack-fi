@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Part = ({ part, exercise }) => <div><p>{part} {exercise}</p></div>
+const Part = ({ title, exercises }) => <div><p>{title} {exercises}</p></div>
 
 export default Part;
 
