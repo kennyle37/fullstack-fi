@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Header from './Header'
 import Button from './Button'
 import Display from './Display'
+import Statistic from './Statistic'
 
 const App = () => {
   const [ totalCount, setTotalCount ] = useState({good: 0, neutral: 0, bad: 0});
@@ -43,9 +44,9 @@ const App = () => {
       <Display category={'good'} total={good}/>
       <Display category={'neutral'} total={neutral}/>
       <Display category={'bad'} total={bad}/>
-      <Display category={'all'} total={all} />
-      <Display category={'average'} total={average} />
-      <Display category={'positive'} total={positive + ' %'} />
+      <Statistic metric={'all'} score={all} />
+      <Statistic metric={'average'} score={average} />
+      <Statistic metric={'positive'} score={positive + ' %'} />
     </div>
   )
 }
