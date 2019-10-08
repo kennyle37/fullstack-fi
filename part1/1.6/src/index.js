@@ -53,19 +53,18 @@ const App = ({ anecdotes }) => {
   }
 
   const handleVote = () => {
-    const copy = [...anecdoteVotes];
-    copy[selected] += 1;
-    setAnecdoteVotes(copy);
+    const votesCopy = [...anecdoteVotes];
+    votesCopy[selected] += 1;
+    setAnecdoteVotes(votesCopy);
   }
 
   const getMostVote = () => Math.max(...anecdoteVotes);
 
   const getMostVoteAnecdote = () => {
-    const index = anecdoteVotes.indexOf(Math.max(...anecdoteVotes));
+    const index = anecdoteVotes.indexOf(getMostVote());
     return anecdotes[index];
   }
-  //return the max
-  //return the index of the max
+
   return (
     <div>
       <Header title={'give feedback'} />
@@ -73,7 +72,7 @@ const App = ({ anecdotes }) => {
       <Button handleClick={handleNeutralCount(neutral+1)}>Neutral</Button>
       <Button handleClick={handleBadCount(bad+1)}>Bad</Button>
       <Header title={'statistics'} />
-      <StatisticContainer good={good} bad={bad} neutral={neutral}>
+      <StatisticContainer all={all}>
         <Statistic metric={'good'} score={good}/>
         <Statistic metric={'neutral'} score={neutral}/>
         <Statistic metric={'bad'} score={bad}/>

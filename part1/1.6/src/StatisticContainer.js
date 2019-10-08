@@ -1,11 +1,11 @@
 import React from 'react';
 
-const StatisticContainer = ({ good, bad, neutral, children }) => {
-  if (!good && !bad && !neutral) {
+const StatisticContainer = ({ all, children }) => {
+  if (!all) {
     return <div>No feedback given</div>
   }
   return (
-    <table style={{'textAlign':'left'}}>
+    <table>
       <tbody>{children}</tbody>
     </table>
   )

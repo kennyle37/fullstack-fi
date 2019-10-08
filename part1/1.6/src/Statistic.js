@@ -3,13 +3,12 @@ import React from 'react';
 const Statistic = ({ metric, score }) => {
   return (
     <tr>
-      <th>
+      <td>
         {metric}
-      </th>
-      <th>
+      </td>
+      <td>
         {score}
-      </th>
-
+      </td>
     </tr>
   )
 }
