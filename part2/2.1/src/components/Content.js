@@ -1,9 +1,16 @@
 import React from 'react';
+import Parts from './Parts';
 
-const Content = ({ children }) => {
+const Content = ({ parts }) => {
+  const total = parts.reduce(((sum, part) => part.exercises + sum), 0);
+  const items = parts.map(item => 
+    <Parts key={item.id} name={item.name} exercises={item.exercises} />
+  )
+
   return (
     <div>
-      {children}
+      {items}
+      <p><b>total of {total} exercises</b></p>
     </div>
   );
 };
