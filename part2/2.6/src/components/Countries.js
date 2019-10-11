@@ -2,9 +2,7 @@ import React from 'react';
 import CountryInfo from './CountryInfo';
 
 const Countries = ({ countries }) => {
-  const handleDisplayLanguages = (country) => {
-    return country.languages.map(language => language.name)
-  }
+  const handleDisplayLanguages = (country) => country.languages.map(language => language.name)
 
   if (countries.length === 0) {
     return <div>Please search for a country</div>
@@ -15,7 +13,14 @@ const Countries = ({ countries }) => {
     const languages = handleDisplayLanguages(countries[0]);
 
     return (
-      <CountryInfo name={name} capital={capital} population={population} languages={languages} flag={flag} />
+      <CountryInfo 
+        name={name} 
+        capital={capital} 
+        population={population}
+        languages={languages} 
+        flag={flag} 
+        exact={true}
+      />
     )
   }
   const displayCountries = countries.map(country => {
@@ -23,7 +28,13 @@ const Countries = ({ countries }) => {
     const languages = handleDisplayLanguages(country);
 
     return (
-      <CountryInfo name={name} capital={capital} population={population} languages={languages} flag={flag} />
+      <CountryInfo 
+        name={name} 
+        capital={capital} 
+        population={population}
+        languages={languages} 
+        flag={flag} 
+      />
     )
   })
 

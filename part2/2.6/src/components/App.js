@@ -31,20 +31,18 @@ const App = () => {
   }
 
   const handleCountry = (e) => {
-    console.log(e.target.value);
     setSearchCountry(e.target.value);
   }
 
-  const countriesResult = () => {
+  const countriesQuery = () => {
     if (!searchCountry) return;
     axios.get(`https://restcountries.eu/rest/v2/name/${searchCountry}`)
       .then(res => {
-        console.log(res.data);
         setCountries(res.data);
       })
   }
 
-  useEffect(countriesResult, [searchCountry]);
+  useEffect(countriesQuery, [searchCountry]);
 
   return (
     <div>
