@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
-import Numbers from './Persons';
-import Filter from './Filter';
-import PersonForm from './PersonForm';
+// import Numbers from './Persons';
+// import Filter from './Filter';
+// import PersonForm from './PersonForm';
+import Phonebook from './Phonebook';
 
 const App = () => {
   const [ persons, setPersons] = useState([])
-  //   { name: 'Arto Hellas', number: '040-123456' },
-  //   { name: 'Ada Lovelace', number: '39-44-5323523' },
-  //   { name: 'Dan Abramov', number: '12-43-234345' },
-  //   { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  // ])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('');
   const [ newFilter, setNewFilter ] = useState('');
+  const [ searchCountry, setSearchCountry ] = useState('');
+  const [ countries, setCountries ] = useState([]);
 
   const handleOnNameChange = (e) => setNewName(e.target.value);
   const handleOnNumberChange = (e) => setNewNumber(e.target.value);
@@ -42,20 +40,44 @@ const App = () => {
     verify ? setPersons(newPerson) : alert(`${person.name} is already in the phone book`);
   }
 
+  const handleCountry = (e) => {
+    console.log(e.target.value);
+    setSearchCountry(e.target.value);
+  }
+
+  const countriesResult = () => {
+    if (!searchCountry) return;
+    axios.get(`https://restcountries.eu/rest/v2/name/${searchCountry}`)
+      .then(res => {
+        console.log(res.data);
+        setCountries(res.data);
+      })
+  }
+
+  useEffect(countriesResult, [searchCountry]);
+
+  /*
+  if countries result is empty
+    return our message
+
+  if countries result is > 10
+    tell them to narrow search
+  
+  else map out the country result
+  */
+
   return (
     <div>
-      <h2>Phonebook</h2>
-      <Filter handleFilter={handleFilter} />
-      <PersonForm 
-        handleSubmit={handleSubmit} 
-        handleOnNameChange={handleOnNameChange} 
-        handleOnNumberChange={handleOnNumberChange} 
-      />
-      <h2>Numbers</h2>
-      <Numbers 
-        persons={persons} 
-        filter={newFilter} 
-      />
+      {/* <Phonebook 
+        handleFilter={handleFilter}
+        handleOnNameChange={handleOnNameChange}
+        handleOnNumberChange={handleOnNumberChange}
+        handleSubmit={handleSubmit}
+        persons={persons}
+        newFilter={newFilter}
+      /> */}
+      <div>Find Countries: <input onChange={handleCountry} /></div>
+      <div>{displayCountries}</div>
     </div>
   )
 }
