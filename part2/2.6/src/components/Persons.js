@@ -9,6 +9,7 @@ const Numbers = ({ persons, filter }) => {
     if (lowerCaseName.includes(lowerCaseFilter)) {
       return <div key={person.name}>{person.name} {person.number}</div>
     }
+    return <div />;
   })
 
   return (

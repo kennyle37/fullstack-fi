@@ -46,20 +46,6 @@ const App = () => {
 
   useEffect(countriesResult, [searchCountry]);
 
-  /*
-  if countries result is empty
-    return our message
-
-  if countries result is > 10
-    tell them to narrow search
-  
-  else map out the country result
-  */
-
-  const handleCountryDisplay = () => {
-    console.log('hi')
-  }
-
   return (
     <div>
       {/* <Phonebook 

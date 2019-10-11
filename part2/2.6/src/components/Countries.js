@@ -1,25 +1,31 @@
 import React from 'react';
+import CountryInfo from './CountryInfo';
 
 const Countries = ({ countries }) => {
+  const handleDisplayLanguages = (country) => {
+    return country.languages.map(language => language.name)
+  }
+
   if (countries.length === 0) {
     return <div>Please search for a country</div>
   } else if (countries.length > 10) {
     return <div>Please narrow your search</div>
   } else if (countries.length === 1) {
     const { name, capital, population, flag } = countries[0];
-    const displayLanguages = countries[0].languages.map(language => <div key={language.name}>{language.name}</div>)
+    const languages = handleDisplayLanguages(countries[0]);
+
     return (
-      <div>
-        <h1>{name}</h1>
-        <div>Capital: {capital}</div>
-        <div>Population: {population}</div>
-        <h1>Languages</h1>
-        {displayLanguages}
-        <img src={flag} height={100}/>
-      </div>
+      <CountryInfo name={name} capital={capital} population={population} languages={languages} flag={flag} />
     )
   }
-  const displayCountries = countries.map(country => <div key={country.name}>{country.name}</div>)
+  const displayCountries = countries.map(country => {
+    const { name, capital, population, flag } = country;
+    const languages = handleDisplayLanguages(country);
+
+    return (
+      <CountryInfo name={name} capital={capital} population={population} languages={languages} flag={flag} />
+    )
+  })
 
   return (
     <div>
