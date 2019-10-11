@@ -48,6 +48,16 @@ const App = () => {
     }
   }
 
+  const handleDelete = (e, id) => {
+    console.log(person)
+    e.preventDefault();
+    phoneBookservice
+      .deleteItem(id)
+      .then(res => {
+        console.log('deleted', res)
+      })
+  }
+
   const handleCountry = (e) => setSearchCountry(e.target.value);
 
   const countriesQuery = () => {
@@ -69,6 +79,7 @@ const App = () => {
         handleSubmit={handleSubmit}
         persons={persons}
         newFilter={newFilter}
+        handleDelete={handleDelete}
       />
       {/* <div>Find Countries: <input onChange={handleCountry} /></div>
       <Countries countries={countries} /> */}

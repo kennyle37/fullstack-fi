@@ -5,7 +5,7 @@ import Filter from './Filter';
 import PersonForm from './PersonForm';
 
 
-const Phonebook = ({ handleFilter, handleOnNameChange, handleOnNumberChange, handleSubmit, persons, newFilter }) => {
+const Phonebook = ({ handleFilter, handleOnNameChange, handleOnNumberChange, handleSubmit, persons, newFilter, handleDelete }) => {
   return (
     <div>
       <h2>Phonebook</h2>
@@ -19,6 +19,7 @@ const Phonebook = ({ handleFilter, handleOnNameChange, handleOnNumberChange, han
       <Numbers 
         persons={persons} 
         filter={newFilter} 
+        handleDelete={handleDelete}
       />
     </div>
   );
