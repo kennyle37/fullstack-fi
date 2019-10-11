@@ -5,6 +5,7 @@ import axios from 'axios';
 // import Filter from './Filter';
 // import PersonForm from './PersonForm';
 import Phonebook from './Phonebook';
+import Countries from './Countries';
 
 const App = () => {
   const [ persons, setPersons] = useState([])
@@ -66,6 +67,10 @@ const App = () => {
   else map out the country result
   */
 
+  const handleCountryDisplay = () => {
+    console.log('hi')
+  }
+
   return (
     <div>
       {/* <Phonebook 
@@ -77,7 +82,7 @@ const App = () => {
         newFilter={newFilter}
       /> */}
       <div>Find Countries: <input onChange={handleCountry} /></div>
-      <div>{displayCountries}</div>
+      <Countries countries={countries} />
     </div>
   )
 }
