@@ -20,19 +20,41 @@ const App = () => {
   const handleFilter = (e) => setNewFilter(e.target.value);
   const verifyDuplicate = (name) => persons.every(person => person.name !== name);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const person = {};
-    person['name'] = newName;
-    person['number'] = newNumber;
-    const verify = verifyDuplicate(person.name);
-    const newPerson = persons.concat(person);
-    verify ? setPersons(newPerson) : alert(`${person.name} is already in the phone book`);
+  const getPhonebookQuery = () => {
+    axios
+      .get('http://localhost:3001/phonebook')
+      .then(res => {
+        console.log(res.data)
+        setPersons(res.data)
+      })
+      .catch(err => console.log(err))
   }
 
-  const handleCountry = (e) => {
-    setSearchCountry(e.target.value);
+  useEffect(getPhonebookQuery, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const verify = verifyDuplicate(newName);
+    const newPerson = {
+      name: newName,
+      number: newNumber
+    }
+    if (verify) {
+      axios
+        .post('http://localhost:3001/phonebook', newPerson)
+        .then(res => {
+          setPersons(persons.concat(res.data))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => console.log(error))
+    } else {
+      return alert(`${newName} is already in the phone book`)
+    }
   }
+
+  const handleCountry = (e) => setSearchCountry(e.target.value);
+
 
   const countriesQuery = () => {
     if (!searchCountry) return;
@@ -46,16 +68,16 @@ const App = () => {
 
   return (
     <div>
-      {/* <Phonebook 
+      <Phonebook 
         handleFilter={handleFilter}
         handleOnNameChange={handleOnNameChange}
         handleOnNumberChange={handleOnNumberChange}
         handleSubmit={handleSubmit}
         persons={persons}
         newFilter={newFilter}
-      /> */}
-      <div>Find Countries: <input onChange={handleCountry} /></div>
-      <Countries countries={countries} />
+      />
+      {/* <div>Find Countries: <input onChange={handleCountry} /></div>
+      <Countries countries={countries} /> */}
     </div>
   )
 }
