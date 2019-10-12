@@ -24,7 +24,7 @@ const deleteItem = ( id ) => {
   const request = axios.delete(`${baseUrl}/${id}`);
   return (
     request
-      .then(res => console.log(res))
+      .then(res => res)
       .catch(err => console.log(err))
   )
 }

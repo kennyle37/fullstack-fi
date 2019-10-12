@@ -48,14 +48,21 @@ const App = () => {
     }
   }
 
-  const handleDelete = (e, id) => {
-    console.log(person)
-    e.preventDefault();
-    phoneBookservice
+  const handleDelete = (id) => () => {
+    if(window.confirm('Do you want to delete user?')) {
+      phoneBookservice
       .deleteItem(id)
       .then(res => {
-        console.log('deleted', res)
+        const oldPersonList = persons.filter(person => {
+          if (person.id !== id) {
+            return person
+          }
+        });
+        setPersons(oldPersonList)
+        setNewName('')
+        setNewNumber('');
       })
+    }
   }
 
   const handleCountry = (e) => setSearchCountry(e.target.value);
@@ -69,7 +76,9 @@ const App = () => {
   }
 
   useEffect(countriesQuery, [searchCountry]);
-
+/*
+TODO FIX: HOW NAME DOESNT CLEAR AFTER SUBMIT AND DELETE FOR INPUT FORM
+*/
   return (
     <div>
       <Phonebook 
@@ -80,6 +89,8 @@ const App = () => {
         persons={persons}
         newFilter={newFilter}
         handleDelete={handleDelete}
+        name={newName}
+        number={newNumber}
       />
       {/* <div>Find Countries: <input onChange={handleCountry} /></div>
       <Countries countries={countries} /> */}

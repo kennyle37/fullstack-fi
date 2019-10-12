@@ -1,49 +1,9 @@
 {
   "phonebook": [
     {
-      "id": 1,
-      "name": "name one",
-      "number": "123-45678"
-    },
-    {
-      "id": 2,
-      "name": "name two",
-      "number": "4545-456478"
-    },
-    {
-      "id": 3,
-      "name": "name three",
-      "number": "23432-4234"
-    },
-    {
-      "name": "s",
-      "number": "s",
-      "id": 4
-    },
-    {
-      "name": "13213",
-      "number": "1313",
-      "id": 5
-    },
-    {
-      "name": "w",
-      "number": "w",
-      "id": 6
-    },
-    {
-      "name": "",
-      "number": "",
-      "id": 7
-    },
-    {
-      "name": "eqe",
-      "number": "qeqe",
-      "id": 8
-    },
-    {
-      "name": "qw",
-      "number": "qw",
-      "id": 9
+      "name": "Kenny",
+      "number": "Le",
+      "id": 1
     }
   ]
 }
