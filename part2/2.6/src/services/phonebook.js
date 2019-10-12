@@ -22,9 +22,7 @@ const updateItem = (id,payload) => {
   const request = axios.put(`${baseUrl}/${id}`, payload);
   return (
     request
-      .then(res => {
-        return res;
-      })
+      .then(res =>  res)
       .catch(err => console.log(err))
   )
 }
