@@ -18,7 +18,16 @@ const createItem = ( payload ) => {
   )
 }
 
-const updateItem = ( id, payload ) => axios.patch(`${baseUrl}/${id}`, payload)
+const updateItem = (id,payload) => {
+  const request = axios.put(`${baseUrl}/${id}`, payload);
+  return (
+    request
+      .then(res => {
+        return res;
+      })
+      .catch(err => console.log(err))
+  )
+}
 
 const deleteItem = ( id ) => {
   const request = axios.delete(`${baseUrl}/${id}`);

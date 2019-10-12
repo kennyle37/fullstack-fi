@@ -19,7 +19,9 @@ const App = () => {
   const handleOnNameChange = (e) => setNewName(e.target.value);
   const handleOnNumberChange = (e) => setNewNumber(e.target.value);
   const handleFilter = (e) => setNewFilter(e.target.value);
-  const verifyDuplicate = (name) => persons.every(person => person.name !== name);
+  const verifyDuplicateName = (name) => persons.every(person => person.name !== name);
+  const verifyDuplicateNumber = (number) => persons.every(person => person.number !== number);
+  const handleCountry = (e) => setSearchCountry(e.target.value);
 
   useEffect(() => {
     phoneBookservice
@@ -30,42 +32,70 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const verify = verifyDuplicate(newName);
+    const verifyName = verifyDuplicateName(newName);
+    const verifyNumber = verifyDuplicateNumber(newNumber);
     const newPerson = {
       name: newName,
       number: newNumber
     }
-    if (verify) {
-      phoneBookservice
-        .createItem(newPerson)
-        .then(res => {
-          setPersons(persons.concat(res))
-          setNewName('')
-          setNewNumber('')
-        })
+    if (verifyName) {
+      handleCreate(newPerson);
+    } else if (!verifyName && verifyNumber) {
+      const toUpdateId = persons.reduce(((id, current) => {
+        if (current.name === newName) {
+          id += current.id;
+        }
+        return id;
+      }), 0);
+      handleUpdate(toUpdateId, newPerson);
     } else {
       return alert(`${newName} is already in the phone book`)
     }
   }
 
-  const handleDelete = (id) => () => {
-    if(window.confirm('Do you want to delete user?')) {
-      phoneBookservice
-      .deleteItem(id)
+  const handleCreate = (newPerson) => {
+    return phoneBookservice
+      .createItem(newPerson)
       .then(res => {
-        const oldPersonList = persons.filter(person => {
-          if (person.id !== id) {
-            return person
-          }
-        });
-        setPersons(oldPersonList)
+        setPersons(persons.concat(res))
         setNewName('')
-        setNewNumber('');
-      })
-    }
+        setNewNumber('')
+      })  
   }
 
-  const handleCountry = (e) => setSearchCountry(e.target.value);
+  const handleUpdate = (id, payload) => {
+    if (window.confirm(`Do you want to update ${newName}'s number?`))
+    return phoneBookservice
+      .updateItem(id, payload)
+      .then(res => {
+        let personsCopy = persons.map(person => {
+          if (person.id === res.data.id) {
+            return res.data;
+          }
+          return person;
+        })
+        setPersons(personsCopy);
+        setNewName('');
+        setNewNumber('');
+      })
+  }
+
+  const handleDelete = (id) => () => {
+    if (window.confirm(`Do you want to delete ${newName}?`)) {
+      phoneBookservice
+        .deleteItem(id)
+        .then(res => {
+          const oldPersonList = persons.filter(person => {
+            if (person.id !== id) {
+              return person
+            }
+          });
+          setPersons(oldPersonList)
+          setNewName('')
+          setNewNumber('');
+        })
+    }
+  }
 
   const countriesQuery = () => {
     if (!searchCountry) return;
@@ -76,9 +106,7 @@ const App = () => {
   }
 
   useEffect(countriesQuery, [searchCountry]);
-/*
-TODO FIX: HOW NAME DOESNT CLEAR AFTER SUBMIT AND DELETE FOR INPUT FORM
-*/
+
   return (
     <div>
       <Phonebook 
