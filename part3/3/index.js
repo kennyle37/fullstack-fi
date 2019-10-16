@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 persons = [
   {
@@ -26,6 +27,7 @@ persons = [
 ]
 
 app.use(bodyParser.json());
+app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
   res.send('<h1>hello world</h1>')
@@ -52,11 +54,6 @@ app.get('/persons/:id', (req, res) => {
   }
 })
 
-/*
-  iterate through every persons
-  check every key if it equals the value
-    if it is return false
-*/
 const handleDuplicates = (key, value) => {
   return persons.every(person => {
     return person[key] !== value
