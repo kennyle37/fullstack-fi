@@ -53,26 +53,38 @@ app.get('/persons/:id', (req, res) => {
 })
 
 /*
-  generate our id to add
-  concat it to persons
-  send the persons
+  iterate through every persons
+  check every key if it equals the value
+    if it is return false
 */
+const handleDuplicates = (key, value) => {
+  return persons.every(person => {
+    return person[key] !== value
+  })
+}
+
 app.post('/persons', (req, res) => {
   const body = req.body;
   const id = Math.floor(Math.random() * 1000) + 1 
-  console.log(body)
   const person = {
     id: id,
     name: body.name,
     number: body.number
   }
+  const duplicateName = handleDuplicates("name", body.name)
+  const duplicateNumber = handleDuplicates("number", body.number)
+
+  if (!duplicateName) res.status(400).json({ 'error': 'duplicate name'})
+  if (!duplicateNumber) res.status(400).json({ 'error': 'duplicate number'})
 
   if (!body.name || !body.number) {
     return res.status(400).json({
       error: 'missing content'
     })
   }
-  
+
+
+
   persons = persons.concat(person);
   res.json(persons);
 })
