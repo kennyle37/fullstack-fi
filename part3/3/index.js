@@ -27,7 +27,13 @@ persons = [
 ]
 
 app.use(bodyParser.json());
-app.use(morgan('tiny'));
+
+// app.use(assignId)
+
+morgan.token('body', (req) => JSON.stringify(req.body))
+morgan.token('status', (res) => res.statusCode)
+
+app.use(morgan(':method :url :status :response-time MS :body :status'))
 
 app.get('/', (req, res) => {
   res.send('<h1>hello world</h1>')
@@ -80,16 +86,14 @@ app.post('/persons', (req, res) => {
     })
   }
 
-
-
   persons = persons.concat(person);
-  res.json(persons);
+  res.status(200).json(persons);
 })
 
 app.delete('/persons/:id', (req, res) => {
   const id = Number(req.params.id);
   persons = persons.filter(person => person.id !== id);
-  res.status(204).json('User deleted');
+  res.status(200).json('User deleted');
 })
 
 const PORT = 3001;
