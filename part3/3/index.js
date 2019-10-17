@@ -7,6 +7,7 @@ const personRoutes = require('./routes/persons');
 const notesRoutes = require('./routes/notes');
 const phonebookRoutes = require('./routes/phonebook');
 
+app.use(express.static('build'))
 app.use(bodyParser.json());
 app.use('/persons', personRoutes);
 app.use('/notes', notesRoutes)
