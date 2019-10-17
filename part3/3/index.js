@@ -28,8 +28,6 @@ persons = [
 
 app.use(bodyParser.json());
 
-// app.use(assignId)
-
 morgan.token('body', (req) => JSON.stringify(req.body))
 morgan.token('status', (res) => res.statusCode)
 
