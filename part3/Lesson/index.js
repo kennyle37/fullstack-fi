@@ -6,6 +6,7 @@ const cors = require('cors');
 const phonebookRoutes = require('./routes/phonebook');
 const notesRoutes = require('./routes/notes');
 
+app.use(express.static('build'))
 app.use(bodyParser());
 app.use(cors());
 
