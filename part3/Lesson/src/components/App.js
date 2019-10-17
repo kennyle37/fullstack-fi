@@ -57,7 +57,7 @@ const App = () => {
     return phoneBookservice
       .createItem(newPerson)
       .then(res => {
-        setPersons(persons.concat(res))
+        setPersons(res)
         setNewName('')
         setNewNumber('')
       })  
@@ -68,13 +68,7 @@ const App = () => {
     return phoneBookservice
       .updateItem(id, payload)
       .then(res => {
-        let personsCopy = persons.map(person => {
-          if (person.id === res.data.id) {
-            return res.data;
-          }
-          return person;
-        })
-        setPersons(personsCopy);
+        setPersons(res.data);
         setNewName('');
         setNewNumber('');
       })

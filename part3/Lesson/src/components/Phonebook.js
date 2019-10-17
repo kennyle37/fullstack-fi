@@ -4,7 +4,6 @@ import Numbers from './Persons';
 import Filter from './Filter';
 import PersonForm from './PersonForm';
 
-
 const Phonebook = ({ handleFilter, handleOnNameChange, handleOnNumberChange, handleSubmit, persons, newFilter, handleDelete, name, number }) => {
   return (
     <div>

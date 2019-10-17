@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(bodyParser());
+app.use(cors());
 
 let notes = [
   {
@@ -23,14 +27,62 @@ let notes = [
   }
 ]
 
+let phonebook = [
+  {
+    "name": "Arty",
+    "number": "123 45",
+    "id": 1
+  },
+  {
+    "name": "Kyle",
+    "number": "142",
+    "id": 2
+  }
+]
+
+app.get('/phonebook', (req, res) => {
+  res.json(phonebook)
+})
+
+app.post('/phonebook', (req, res) => {
+  const person = {
+    id: Math.floor(Math.random() * 1000) + 1,
+    name: req.body.name,
+    number: req.body.number
+  };
+  phonebook = phonebook.concat(person)
+  res.status(200).json(phonebook);
+})
+
+app.delete('/phonebook/:id', (req, res) => {
+  const id = Number(req.params.id);
+  phonebook = phonebook.filter(person => person.id !== id);
+  res.status(200).json(phonebook)
+})
+
+app.put('/phonebook/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const updatedPhonebook = phonebook.map(person => {
+    if (person.id === id) {
+      return {
+        id: id,
+        name: req.body.name,
+        number: req.body.number
+      }
+    } else {
+      return person
+    }
+  })
+  phonebook = updatedPhonebook;
+  res.status(200).json(updatedPhonebook);
+})
+
 app.post('/notes', (req, res) => {
-  const note = req.body;
-  console.log(note);
   res.json(note);
 })
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
+  res.send('<h1>Hello Lesson</h1>');
 })
 
 app.get('/notes', (req, res) => {
@@ -40,8 +92,6 @@ app.get('/notes', (req, res) => {
 app.get('/notes/:id', (req, res) => {
   const id = Number(req.params.id);
   const note = notes.find(note => {
-    console.log('note id', typeof note.id);
-    console.log('id', typeof id)
     return note.id === id
   }
   );
