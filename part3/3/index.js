@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const personRoutes = require('./routes/persons')
 
 app.use(bodyParser.json());
-app.use('/persons', personRoutes)
+app.use('/', personRoutes)
 
 morgan.token('body', (req) => JSON.stringify(req.body))
 morgan.token('status', (res) => res.statusCode)
