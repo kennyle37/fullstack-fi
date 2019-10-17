@@ -10,7 +10,7 @@ app.use(bodyParser());
 app.use(cors());
 
 app.use('/phonebook', phonebookRoutes)
-app.use('/notes', notesRoutes)
+app.use('', notesRoutes)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

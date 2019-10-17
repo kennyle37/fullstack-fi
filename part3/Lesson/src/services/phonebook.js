@@ -9,6 +9,7 @@ const getAll = () => {
       .catch(err => console.log(err))
   )
 }
+
 const createItem = ( payload ) => {
   const request = axios.post(baseUrl, payload)
   return (
@@ -35,7 +36,6 @@ const deleteItem = ( id ) => {
       .catch(err => console.log(err))
   )
 }
-
 
 export default {
   getAll,
