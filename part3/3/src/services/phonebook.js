@@ -6,8 +6,6 @@ const getAll = () => {
   return (
     request
       .then(res => {
-        // console.log('reached')
-        // console.log(res)
         return res.data
       })
       .catch(err => console.log(err))
