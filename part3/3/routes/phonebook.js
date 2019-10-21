@@ -5,9 +5,34 @@ const Phonebook = require('../models/phonebook')
 
 router
   .get('/', (req, res) => {
-    Phonebook.find({}).then(entry => {
-      res.json(entry)
-    })
+    Phonebook.find({})
+      .then(entry => {
+        if (entry) {
+          res.json(entry)
+        } else {
+          res.status(404).end()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send({ error: 'unable to fetch '})
+      })
+  })
+
+router
+  .get('/:id', (req, res) => {
+    Phonebook.findById(req.params.id)
+      .then(entry => {
+        if (entry) {
+          res.json(entry)
+        } else {
+          res.status(404).end()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send({ error: 'unable to fetch '})
+      })
   })
 
 router
@@ -18,16 +43,22 @@ router
       })
       newEntry
         .save()
-        .then(response => response)
-      res.status(200).json({ 'added': newEntry })
+        .then(response => {
+          res.status(200).json({ 'added': newEntry })
+          return response;
+        })
     })
 
 router
   .delete('/:id', (req, res) => {
     Phonebook
       .findByIdAndDelete(req.params.id)
-      .then(response => response)
-    res.status(200).json("content deleted");
+      .then(response => {
+        res.status(200).json("content deleted");
+        return response;
+      })
+      .catch(error => console.error(error))
+    ;
   })
 
 router
@@ -40,9 +71,11 @@ router
     const option = { useFindAndModify: false }
     Phonebook
       .findByIdAndUpdate(id, payload, option)
-      .then(response => response)
+      .then(response => {
+        res.status(200).json({'updated': payload })
+        return response;
+      })
       .catch(err => console.error('THIS IS ERROR', err))
-    res.status(200).json({'updated': payload })
   })
 
 module.exports = router;
