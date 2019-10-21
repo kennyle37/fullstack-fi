@@ -19,17 +19,6 @@ const phonebookSchema = new mongoose.Schema({
 
 const Phonebook = new mongoose.model('Phonebook', phonebookSchema)
 
-// const entry = new Phonebook({
-//   "name": "Arty",
-//   "number": "123 45",
-//   "date": new Date(),
-// })
-
-// entry.save().then(response => {
-//   console.log('Arty saved!')
-//   mongoose.connection.close()
-// })
-
 phonebookSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()

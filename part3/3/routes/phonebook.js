@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Phonebook = require('../models/phonebook')
 
 router
@@ -17,34 +18,29 @@ router
       })
       newEntry
         .save()
-        .then(response => {
-          mongoose.connection.close()
-        })
-      res.status(200).json({ "content created": newEntry })
+        .then(response => response)
+      res.status(200).json({ 'added': newEntry })
     })
 
 router
   .delete('/:id', (req, res) => {
     Phonebook
       .findByIdAndDelete(req.params.id)
-      .then(response => {
-        mongoose.connection.close()
-      })
+      .then(response => response)
     res.status(200).json("content deleted");
   })
 
 router
   .put('/:id', (req, res) => {
+    const id = mongoose.Types.ObjectId(req.params.id)
     Phonebook
-      .findByIdAndUpdate(req.params.id, {
-        "name": req.body.name,
-        "number": req.body.number
-      })
-      .then(response => {
-        mongoose.connection.close()
-      })
-      .catch(err => console.error(err))
-    res.status(200).json("content updated!")
+      .findByIdAndUpdate(id, {
+        name: req.body.name,
+        number: req.body.number
+      }, { useFindAndModify: false })
+      .then(response => response)
+      .catch(err => console.error('THIS IS ERROR', err))
+    res.status(200).json('content updated')
   })
 
 module.exports = router;

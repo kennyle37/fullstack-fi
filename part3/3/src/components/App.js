@@ -57,7 +57,7 @@ const App = () => {
     return phoneBookservice
       .createItem(newPerson)
       .then(res => {
-        setPersons(res)
+        setPersons(persons.concat(res.added))
         setNewName('')
         setNewNumber('')
       })  
@@ -68,7 +68,20 @@ const App = () => {
     return phoneBookservice
       .updateItem(id, payload)
       .then(res => {
-        setPersons(res.data);
+        console.log('this is persons', persons)
+        console.log('this is data', res.data)
+        const newPerson = persons.map(person => {
+          if (person.id === res.id) {
+            return {
+              id: res.id,
+              name: res.name,
+              number: res.number
+            }
+          } else {
+            return person
+          }
+        })
+        setPersons(newPerson);
         setNewName('');
         setNewNumber('');
       })

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = '/phonebook';
+const baseUrl = 'http://localhost:3001/';
 
 const getAll = () => {
   const request = axios.get(baseUrl)

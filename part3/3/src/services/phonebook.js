@@ -1,13 +1,11 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3001/';
+const baseUrl = 'http://localhost:3001';
 
 const getAll = () => {
   const request = axios.get(baseUrl)
   return (
     request
-      .then(res => {
-        return res.data
-      })
+      .then(res => res.data)
       .catch(err => console.log(err))
   )
 }
@@ -25,7 +23,10 @@ const updateItem = (id,payload) => {
   const request = axios.put(`${baseUrl}/${id}`, payload);
   return (
     request
-      .then(res =>  res)
+      .then(res => {
+        console.log('THIS IS RES', res.config)
+        return res;
+      })
       .catch(err => console.log(err))
   )
 }
