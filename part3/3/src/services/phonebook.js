@@ -14,7 +14,7 @@ const createItem = ( payload ) => {
   const request = axios.post(baseUrl, payload)
   return (
     request
-      .then(res => res.data)
+      .then(res => res.data.added)
       .catch(err => console.log(err))
   )
 }
@@ -24,8 +24,7 @@ const updateItem = (id,payload) => {
   return (
     request
       .then(res => {
-        console.log('THIS IS RES', res.config)
-        return res;
+        return res.data.updated;
       })
       .catch(err => console.log(err))
   )

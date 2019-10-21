@@ -33,21 +33,15 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const verifyName = verifyDuplicateName(newName);
-    const verifyNumber = verifyDuplicateNumber(newNumber);
     const newPerson = {
       name: newName,
       number: newNumber
     }
     if (verifyName) {
       handleCreate(newPerson);
-    } else if (!verifyName && verifyNumber) {
-      const toUpdateId = persons.reduce(((id, current) => {
-        if (current.name === newName) {
-          id += current.id;
-        }
-        return id;
-      }), 0);
-      handleUpdate(toUpdateId, newPerson);
+    } else if (!verifyName) {
+      const personToUpdate = persons.find(person => person.name === newName)
+      handleUpdate(personToUpdate.id, newPerson);
     } else {
       return alert(`${newName} is already in the phone book`)
     }
@@ -57,7 +51,7 @@ const App = () => {
     return phoneBookservice
       .createItem(newPerson)
       .then(res => {
-        setPersons(persons.concat(res.added))
+        setPersons(persons.concat(res))
         setNewName('')
         setNewNumber('')
       })  
@@ -68,18 +62,14 @@ const App = () => {
     return phoneBookservice
       .updateItem(id, payload)
       .then(res => {
-        console.log('this is persons', persons)
-        console.log('this is data', res.data)
         const newPerson = persons.map(person => {
-          if (person.id === res.id) {
+          if (person.id === id) {
             return {
-              id: res.id,
-              name: res.name,
-              number: res.number
+              id: id,
+              ...payload
             }
-          } else {
-            return person
           }
+          return person
         })
         setPersons(newPerson);
         setNewName('');

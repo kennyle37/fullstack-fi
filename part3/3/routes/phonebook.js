@@ -33,14 +33,16 @@ router
 router
   .put('/:id', (req, res) => {
     const id = mongoose.Types.ObjectId(req.params.id)
+    const payload = {
+      name: req.body.name,
+      number: req.body.number
+    }
+    const option = { useFindAndModify: false }
     Phonebook
-      .findByIdAndUpdate(id, {
-        name: req.body.name,
-        number: req.body.number
-      }, { useFindAndModify: false })
+      .findByIdAndUpdate(id, payload, option)
       .then(response => response)
       .catch(err => console.error('THIS IS ERROR', err))
-    res.status(200).json('content updated')
+    res.status(200).json({'updated': payload })
   })
 
 module.exports = router;
