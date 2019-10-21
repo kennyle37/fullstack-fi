@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Phonebook = require('../models/phonebook')
 
 let phonebook = [
   {
@@ -16,18 +17,42 @@ let phonebook = [
 
 router
   .get('/', (req, res) => {
-    res.json(phonebook)
+    Phonebook.find({}).then(entry => {
+      res.json(entry)
+    })
   })
 
 router.
   post('/', (req, res) => {
-    const person = {
-      id: Math.floor(Math.random() * 1000) + 1,
-      name: req.body.name,
-      number: req.body.number
-    };
-    phonebook = phonebook.concat(person)
-    res.status(200).json(phonebook);
+    Phonebook.findOne({
+      name: req.body.name
+    })
+    .then(entry => {
+      console.log(entry)
+      if (entry === null) {
+        const newEntry = new Phonebook({
+          "name": req.body.name,
+          "number": req.body.number
+        })
+        newEntry
+          .save()
+          .then(response => {
+            console.log('saved', response)
+            mongoose.connection.close()
+            res.status(200).json('Created entry', response);
+          })
+          .catch(error => {
+            console.error(error)
+          })
+        } else {
+          res.json('User already exists!')
+          res.status(400);
+        }
+      })
+      .catch(err => {
+        console.error('unable to create', err)
+      })
+
   })
 
 router

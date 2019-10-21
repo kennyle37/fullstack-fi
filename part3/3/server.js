@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors')
+const Phonebook = require('./models/phonebook')
 
 const personRoutes = require('./routes/persons');
 const notesRoutes = require('./routes/notes');
