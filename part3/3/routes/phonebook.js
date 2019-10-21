@@ -21,9 +21,6 @@ router
 
 router.
   post('/', (req, res) => {
-    console.log('this is req.params', req.params)
-    console.log('this is req.body', req.body)
-    console.log('res', res.body)
     const person = {
       id: Math.floor(Math.random() * 1000) + 1,
       name: req.body.name,
@@ -42,7 +39,6 @@ router
 
 router
   .put('/:id', (req, res) => {
-    console.log('reached id')
     const id = Number(req.params.id);
     const updatedPhonebook = phonebook.map(person => {
       if (person.id === id) {
